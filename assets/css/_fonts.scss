@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "Rubik";
+    src: local("Rubik Medium"), local("Rubik-Medium"),
+      url("../fonts/Rubik-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Rubik";
+    src: local("Rubik Light"), local("Rubik-Light"),
+      url("../fonts/Rubik-Light.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+  }
