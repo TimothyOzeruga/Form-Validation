@@ -38,16 +38,7 @@ $(function () {
   function confirmPassword(confPassword) {
     var password = $("#password").val();
     return password === confPassword;
-  } // function checkboxCheck(checkbox){
-  //     if(!checkbox.is(":checked")){
-  //         $('#checkbox_label').removeClass('text_agree2').addClass('text_agree');
-  //         return true;
-  //     }else{
-  //         $('#checkbox_label').removeClass('text_agree').addClass('text_agree2');
-  //         return false;
-  //     }
-  // }
-
+  }
 
   function removeErr() {
     $('div.err').remove();
