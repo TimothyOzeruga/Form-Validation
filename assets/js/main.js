@@ -35,14 +35,18 @@ $(function(){
         let password = $("#password").val();
         return password === confPassword
     }
-    function checkboxCheck(checkbox){
-        if(checkbox.is(":checked")){
-            $('#checkbox_label').removeClass('text_agree2').addClass('text_agree');
-            return true;
-        }else{
-            $('#checkbox_label').removeClass('text_agree').addClass('text_agree2');
-            return false;
-        }
+    // function checkboxCheck(checkbox){
+    //     if(!checkbox.is(":checked")){
+    //         $('#checkbox_label').removeClass('text_agree2').addClass('text_agree');
+    //         return true;
+    //     }else{
+    //         $('#checkbox_label').removeClass('text_agree').addClass('text_agree2');
+    //         return false;
+    //     }
+    // }
+    function removeErr(){
+        $('div.err').remove();
+        $('#checkbox_label').removeClass('text_agree2').addClass('text_agree');
     }
 
     function sendForm($form){
@@ -100,18 +104,18 @@ $(function(){
                     }
                 }
                 if($(this).attr("name") === "checkbox"){
-                    checkboxCheck($(this));
-                    if(!checkboxCheck($(this))){
+                    if(!$(this).is(":checked")){
+                        $('#checkbox_label').removeClass('text_agree').addClass('text_agree2');
                         valid = false;
                     }
-                    $(this).on("click", function(){
-                        checkboxCheck($(this));
-                    })
                 }
             }
-            $(this).on("focus", function(){
-                $(this).siblings(".err").remove();
-            });
+            
+            if($('div.err').length){
+                setTimeout(function () {
+                    removeErr();
+                }, 4000)
+            }
         });
         if(valid){
            axios
@@ -136,10 +140,10 @@ $(function(){
             let h = $('<div id="top_panel" class="panel_success"><p>Your data has been successfully sent</p></p></div>');
             $("body").prepend(h);
             if (autoclose) {
-            const _this = this;
-            setTimeout(function () {
-                _this.closePanel();
-            }, 3000);
+                const _this = this;
+                setTimeout(function () {
+                    _this.closePanel();
+                }, 3000);
             }
         },
         closePanel() {
