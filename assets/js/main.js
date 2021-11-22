@@ -10,11 +10,11 @@ $(function(){
     });
 
     $(".form_select").on("focus", function(){
-        $("#select-labell").addClass("select-label");
+        $("#select-label").addClass("select-label");
     });
     $(".form_select").on("blur", function(){
         if($(".form_select").val()===''){
-            $("#select-labell").removeClass("select-label");
+            $("#select-label").removeClass("select-label");
         }
     });
 
@@ -23,6 +23,10 @@ $(function(){
         sendForm($(this));
     });
 
+
+    function CheckSpaces2(str) {
+        return str.trim() !== '';
+      }
     function validateEmail(email) {
         const regEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return regEmail.test(email);
@@ -46,24 +50,32 @@ $(function(){
         let text = "Hello"
         let valid = true;
 
-        $("form").find('*[data-required]').each(function(){
+        $("form").find('*[data-required]').each(function(e){
             if($(this).siblings(".err").length) $(this).siblings(".err").remove();
             if($(this).val()===''){
                 $(this).parent().append($('<div class="err">Fill in the field</div>'));
                 valid = false
             }else{
                 if($(this).attr("name") === "first_name"){
-                    if ($(this).val().length < 3) {
+                    if(!CheckSpaces2($(this).val())){
+                        $(this).parent().append($('<div class="err">Your name cannot be composed of spaces</div>'));
+                        $(this).val('');
+                        valid = false; 
+                    }else if ($(this).val().length < 3) {
                         $(this).parent().append($('<div class="err">The name must be more than 2 characters</div>'));
                         $(this).val('');
-                        valid = false;
+                        valid = false; 
                     }
                 }
                 if($(this).attr("name") === "second_name"){
-                    if ($(this).val().length < 3) {
+                    if(!CheckSpaces2($(this).val())){
+                        $(this).parent().append($('<div class="err">Your name cannot be composed of spaces</div>'));
+                        $(this).val('');
+                        valid = false; 
+                    }else if ($(this).val().length < 3) {
                         $(this).parent().append($('<div class="err">The name must be more than 2 characters</div>'));
                         $(this).val('');
-                        valid = false;
+                        valid = false; 
                     }
                 }
                 if($(this).attr("name") === "phone"){
@@ -101,7 +113,10 @@ $(function(){
                     }
                 }
             }
-            
+
+            $(this).on("focus", function(){
+                $(this).siblings(".err").remove()
+            });
             if($('div.err').length){
                 setTimeout(function () {
                     removeErr();
@@ -138,7 +153,7 @@ $(function(){
             }
         },
         closePanel() {
-            $("top_panel").remove();
+            $("#top_panel").remove();
         },
     };
 
@@ -153,4 +168,3 @@ $(function(){
     )
     wow.init();
 });
- 
